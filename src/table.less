@@ -1,0 +1,32 @@
+@table-name: m-table;
+
+.@{table-name}{
+  width: 100%;
+  border-spacing: 0px;
+  border-collapse:collapse;
+  table-layout: fixed;
+  background-color: #fff;
+  
+  &&-head{
+    user-select: none;
+  }
+
+  &&-body{
+    margin-top: -1px;
+  }
+  &&__stripe &-row:nth-child(even){
+    background-color: #F6F8FA;
+  }
+  & &-row:hover{
+    background-color: #F6F8FA;
+  }
+  & &-column{
+    padding: 5px 12px;
+    line-height: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  &&__border &-column{
+    border: solid 1px #EAECEF;
+  }
+}
