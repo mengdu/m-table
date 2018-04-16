@@ -10,14 +10,6 @@ export default {
       default: []
     }
   },
-  computed: {
-    html () {
-      return <h1>xxx</h1>
-    },
-    text () {
-      return 'xxx'
-    }
-  },
   render (h) {
     return (
       <tbody>
@@ -28,7 +20,16 @@ export default {
                 {
                   this._l(this.columns, (column, cindex) => {
                     return (
-                      <td class="m-table-column" key={rindex + '-' + cindex}>{column.index ? rindex + 1 : row[column.prop]}</td>
+                      <td class="m-table-column" key={rindex + '-' + cindex}>
+                        {
+                          column.render(h, {
+                            row,
+                            column,
+                            index: rindex,
+                            columnIndex: cindex
+                          })
+                        }
+                      </td>
                     )
                   })
                 }

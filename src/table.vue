@@ -9,7 +9,6 @@
         <th class="m-table-column"
           v-for="(column, index) in columns"
           :key="column.label + index"
-          :data-index="index"
           :style="{
             width: column.width
           }"
@@ -33,30 +32,17 @@
           }"
           >
       </colgroup>
-      <!-- <tbody>
-        <tr class="m-table-row"
-          v-for="(row, index) in data"
-          :key="index"
-          >
-            <td class="m-table-column"
-              v-for="(column, cindex) in columns"
-              :key="index + '-' + cindex"
-              >{{column.index ? index + 1 : row[column.prop]}}</td>
-          </tr>
-      </tbody> -->
       <m-table-body :columns="columns" :data="data"></m-table-body>
     </table>
     <slot></slot>
   </div>
 </template>
 <script>
-// import Demo from './demo'
 import MTableBody from './table-body'
 export default {
   name: 'MTable',
   componentName: 'MTable',
   components: {
-    // Demo
     MTableBody
   },
   props: {
@@ -101,12 +87,6 @@ export default {
           this.currentColumn.width = width + 'px'
         }
       }
-    },
-    handleRender (slot, row) {
-      let vnode = typeof slot === 'function' ? slot(row) : slot
-      let el = this.$createElement('div', vnode)
-      console.log(el)
-      return el
     }
   },
   created () {

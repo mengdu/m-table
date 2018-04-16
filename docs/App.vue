@@ -18,11 +18,13 @@
         <m-table-column prop="login" label="username"></m-table-column>
         <m-table-column label="操作">
           <template slot-scope="scope">
-            <span>scope:{{scope}}</span>
+            <span>{{scope}}</span>
           </template>
         </m-table-column>
         <m-table-column :label="label">
-          <span>test</span>
+          <template slot-scope="scope">
+            <m-button type="info" size="mini" >信息</m-button>
+          </template>
         </m-table-column>
       </m-table>
     </div>
@@ -57,7 +59,9 @@ export default {
         {name: '张三', age: 19, login: 'zhangsan'},
         {name: '李四', age: 18, login: 'lisi'},
         {name: '王五', age: 20, login: 'wangwu'},
-        {name: '测试员', age: 21, login: 'ceshi'}
+        {name: '测试员', age: 21, login: 'ceshi'},
+        {name: 'ADMIN', age: 22, login: 'TEST'},
+        {name: 'TEST', age: 17, login: 'ADMIN'}
       ]
     }
   },

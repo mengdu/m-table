@@ -7782,6 +7782,10 @@ vue-loader@^13.3.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
+vue-m-button@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vue-m-button/-/vue-m-button-1.0.0.tgz#f0594de9ef6e252e880a088f64c4a3cee9ba6f1d"
+
 vue-markdown-loader@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/vue-markdown-loader/-/vue-markdown-loader-2.4.1.tgz#324e730e21cfe2ab37f415ff7eaf4ca36696165f"
