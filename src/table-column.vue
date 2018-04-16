@@ -7,7 +7,8 @@ export default {
     label: String,
     algin: String,
     width: [Number, String],
-    index: [Boolean, Function]
+    index: [Boolean, Function],
+    minWidth: [Number, String]
   },
   methods: {
     getParent (name) {

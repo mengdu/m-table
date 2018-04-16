@@ -15,7 +15,6 @@
           }"
           @mousemove="handleMouseMove"
           @mousedown="handleMouseDown($event, index)"
-          @mouseup="handleMouseUp"
           >{{column.label}}</th>
       </thead>
     </table>
@@ -42,7 +41,7 @@
             <td class="m-table-column"
               v-for="(column, cindex) in columns"
               :key="index + '-' + cindex"
-              ><demo :params="handleRender(column.slot, row)"></demo>{{column.index ? index + 1 : row[column.prop]}}</td>
+              >{{column.index ? index + 1 : row[column.prop]}}</td>
           </tr>
       </tbody>
     </table>
@@ -50,12 +49,12 @@
   </div>
 </template>
 <script>
-import Demo from './demo'
+// import Demo from './demo'
 export default {
   name: 'MTable',
   componentName: 'MTable',
   components: {
-    Demo
+    // Demo
   },
   props: {
     data: Array,
@@ -79,22 +78,26 @@ export default {
       } else {
         e.target.style.cursor = ''
       }
-      // console.log(this.isColResize)
-      if (this.isColResize) {
-        let width = this.startWidth + e.clientX - this.startOffsetX
-        this.currentColumn.width = width + 'px'
-        // console.log(width)
-      }
     },
     handleMouseDown (e, index) {
+      let offsetRight = e.target.offsetWidth - e.offsetX
+      if (offsetRight > 10) return null
       this.isColResize = true
       this.startOffsetX = e.clientX
       this.startWidth = e.target.offsetWidth
       this.currentColumn = this.columns[index]
-      // console.log('down', index)
     },
-    handleMouseUp (e) {
+    docMouseUp (e) {
       this.isColResize = false
+    },
+    docMousemove (e) {
+      if (this.isColResize) {
+        let width = this.startWidth + e.clientX - this.startOffsetX
+        let minWidth = this.currentColumn.index ? 40 : parseInt(this.currentColumn.minWidth) || 80
+        if (width >= minWidth) {
+          this.currentColumn.width = width + 'px'
+        }
+      }
     },
     handleRender (slot, row) {
       let vnode = typeof slot === 'function' ? slot(row) : slot
@@ -106,9 +109,16 @@ export default {
   created () {
     window.table = this
   },
-  beforeCreate () {
-    // console.log(this.$parent)
-
+  mounted () {
+    document.addEventListener('mousemove', this.docMousemove)
+    document.addEventListener('mouseup', this.docMouseUp)
+    this.removeListen = () => {
+      document.removeEventListener('mousemove', this.docMousemove)
+      document.removeEventListener('mouseup', this.docMouseUp)
+    }
+  },
+  beforeDestroy () {
+    this.removeListen()
   }
 }
 </script>
