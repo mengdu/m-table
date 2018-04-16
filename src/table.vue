@@ -33,7 +33,7 @@
           }"
           >
       </colgroup>
-      <tbody>
+      <!-- <tbody>
         <tr class="m-table-row"
           v-for="(row, index) in data"
           :key="index"
@@ -43,18 +43,21 @@
               :key="index + '-' + cindex"
               >{{column.index ? index + 1 : row[column.prop]}}</td>
           </tr>
-      </tbody>
+      </tbody> -->
+      <m-table-body :columns="columns" :data="data"></m-table-body>
     </table>
     <slot></slot>
   </div>
 </template>
 <script>
 // import Demo from './demo'
+import MTableBody from './table-body'
 export default {
   name: 'MTable',
   componentName: 'MTable',
   components: {
     // Demo
+    MTableBody
   },
   props: {
     data: Array,

@@ -20,8 +20,8 @@
           <template slot-scope="scope">
             <span>scope:{{scope}}</span>
           </template>
-        </m-table-column label="test">
-        <m-table-column>
+        </m-table-column>
+        <m-table-column :label="label">
           <span>test</span>
         </m-table-column>
       </m-table>
@@ -30,12 +30,6 @@
       <readme />
       <Doc/>
     </main> -->
-    <m-test>xxx</m-test>
-    <m-test>
-      <template slot-scope="scope">
-        <p>{{scope}}</p>
-      </template>
-    </m-test>
     <layout-footer></layout-footer>
   </div>
 </template>
@@ -58,6 +52,7 @@ export default {
   data () {
     return {
       pkg,
+      label: 'test',
       data: [
         {name: '张三', age: 19, login: 'zhangsan'},
         {name: '李四', age: 18, login: 'lisi'},
@@ -69,7 +64,13 @@ export default {
   computed: {
     repo () {
       return pkg.repository.url.replace(/git\+/, '')
+    },
+    html () {
+      return <div>aaa</div>
     }
+  },
+  created () {
+    window.label = this.label
   }
 }
 </script>
