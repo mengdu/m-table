@@ -1,8 +1,11 @@
 <template>
   <div class="m-table-block">
-    <table class="m-table m-table-head"
+    <table class="m-table m-table-head" ref="table"
       :class="{
         'm-table__border': border
+      }"
+      :style="{
+        width: doWidth
       }"
       >
       <thead>
@@ -21,6 +24,9 @@
       :class="{
         'm-table__stripe': stripe,
         'm-table__border': border
+      }"
+      :style="{
+        width: doWidth
       }"
       >
       <colgroup>
@@ -56,7 +62,13 @@ export default {
       isColResize: false,
       startOffsetX: 0,
       startWidth: 0,
-      currentColumn: null
+      currentColumn: null,
+      tableWidth: null
+    }
+  },
+  computed: {
+    doWidth () {
+      return this.tableWidth ? this.tableWidth + 'px' : null
     }
   },
   methods: {
@@ -75,6 +87,7 @@ export default {
       this.startOffsetX = e.clientX
       this.startWidth = e.target.offsetWidth
       this.currentColumn = this.columns[index]
+      this.oldTableWidth = this.$refs.table.offsetWidth
     },
     docMouseUp (e) {
       this.isColResize = false
@@ -85,6 +98,7 @@ export default {
         let minWidth = this.currentColumn.index ? 40 : parseInt(this.currentColumn.minWidth) || 80
         if (width >= minWidth) {
           this.currentColumn.width = width + 'px'
+          this.tableWidth = this.oldTableWidth + e.clientX - this.startOffsetX
         }
       }
     }

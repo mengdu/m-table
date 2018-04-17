@@ -30,9 +30,11 @@ export default {
   beforeCreate () {
     this.column = {}
   },
+  // updated () {
+  //   console.log(this)
+  //   return null
+  // },
   created () {
-    // this.$options.render = h => h('div', this.$slots.default)
-    // console.log(this.$slots)
     let column = {...this.$props}
     this.column = column
     let that = this

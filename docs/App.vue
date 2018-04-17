@@ -18,7 +18,8 @@
         <m-table-column prop="login" label="username"></m-table-column>
         <m-table-column label="操作">
           <template slot-scope="scope">
-            <span>{{scope}}</span>
+            <a href="#">{{scope.row.login}}</a>
+            <a href="#">{{scope.row.login}}</a>
           </template>
         </m-table-column>
         <m-table-column :label="label">
