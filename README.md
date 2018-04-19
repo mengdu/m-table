@@ -37,26 +37,35 @@ Vue.use(MButton)
 </m-button-group>
 ```
 
-### Button Attributes
+### MTable Attributes
 
-<!-- + **disabled** 禁用状态
-+ **type** 主题；可选值：`info`，`primary`，`warning`，`danger`，`success`
-+ **size** 大小；可选值：`max`, `large`, `默认`, `samll`, `mini`
-+ **plain** 朴素按钮
-+ **round** 圆形按钮
-+ **block** 块按钮
-+ **active** 焦点
-+ **effect** 焦点涟漪效果，默认开启
-+ **router** 路由对象会这路由 `path` ，内部执行的是 `this.$router.push` 方法 -->
 
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
-| size     | 尺寸   | string | `max`, `large`, `默认`, `samll`, `mini` |    —     |
-| type     | 类型   | string    |   `info`，`primary`，`warning`，`danger`，`success` |     —    |
-| plain     | 是否朴素按钮   | boolean    | — | false   |
-| round     | 圆形按钮   | boolean    | — | false   |
-| disabled  | 是否禁用状态    | boolean   | —   | false   |
-| active  | 焦点状态    | boolean   | —   | false   |
-| effect  | 焦点涟漪效果    | boolean   | —   | true   |
-| router  | 路由    | path  | —   | —  |
+| date     | 数据   | Array |  —  |    —     |
+| stripe   | 斑马线   | Boolean    |   —    |    false   |
+| border   | 边框   | Boolean    |  —  | false   |
+| row-class | 行类名   | String\Function  |  —  |  —  |
+| height | 高度   | String\Number  |  —  |  —  |
+| max-height | 最大高度   | String\Number  |  —  |  —  |
+| width | 宽   | String\Number |  —  |  —  |
+| max-width | 最大宽   | String\Number |  —  |  —  |
 
+
+### MTable Events
+
+row-click
+row-hover
+
+
+### MTable Column Attributes
+
+prop
+label
+align
+width
+index
+minWidth
+className
+labelClassName
+show

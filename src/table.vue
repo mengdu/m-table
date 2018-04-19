@@ -1,26 +1,20 @@
 <template>
-  <div class="m-table-block">
-    <table class="m-table m-table-head" ref="table"
-      :class="{
-        'm-table__border': border
-      }"
-      :style="{
-        width: doWidth
-      }"
-      >
-      <thead>
-        <th class="m-table-column"
-          v-for="(column, index) in columns"
-          :key="column.label + index"
-          :style="{
-            width: column.width
-          }"
-          @mousemove="handleMouseMove"
-          @mousedown="handleMouseDown($event, index)"
-          >{{column.label}}</th>
-      </thead>
-    </table>
-    <table class="m-table m-table-body"
+  <div class="m-table-block"
+    :style="{
+      height: toCssVal(height),
+      maxHeight: toCssVal(maxHeight),
+      width: toCssVal(width),
+      maxWidth: toCssVal(maxWidth)
+    }"
+    >
+    <div class="m-table-slot"><slot></slot></div>
+    <m-table-header
+      :columns="doColumns"
+      :width="doWidth"
+      :border="border"
+      @col-resize="thColResize"
+      ></m-table-header>
+    <table class="m-table m-table-body" ref="table"
       :class="{
         'm-table__stripe': stripe,
         'm-table__border': border
@@ -31,30 +25,36 @@
       >
       <colgroup>
         <col
-          v-for="(column, index) in columns"
+          v-for="(column, index) in doColumns"
           :key="column.label + index"
           :style="{
             width: column.width
           }"
           >
       </colgroup>
-      <m-table-body :columns="columns" :data="data"></m-table-body>
+      <m-table-body :row-class="rowClass" :columns="doColumns" :data="data" v-on="$listeners"></m-table-body>
     </table>
-    <slot></slot>
   </div>
 </template>
 <script>
+import MTableHeader from './table-header'
 import MTableBody from './table-body'
 export default {
   name: 'MTable',
   componentName: 'MTable',
   components: {
+    MTableHeader,
     MTableBody
   },
   props: {
     data: Array,
     stripe: Boolean,
-    border: Boolean
+    border: Boolean,
+    rowClass: [String, Function],
+    height: [String, Number],
+    maxHeight: [String, Number],
+    width: [String, Number],
+    maxWidth: [String, Number]
   },
   data () {
     return {
@@ -69,24 +69,23 @@ export default {
   computed: {
     doWidth () {
       return this.tableWidth ? this.tableWidth + 'px' : null
+    },
+    doColumns () {
+      return this.columns.filter(e => e.show)
     }
   },
   methods: {
-    handleMouseMove (e) {
-      let offsetRight = e.target.offsetWidth - e.offsetX
-      if (offsetRight < 10) {
-        e.target.style.cursor = 'col-resize'
-      } else {
-        e.target.style.cursor = ''
-      }
+    toCssVal (val) {
+      if (!val) return null
+      if (/(px|rem|rem)/.test(val.toString())) return val
+      else return val + 'px'
     },
-    handleMouseDown (e, index) {
-      let offsetRight = e.target.offsetWidth - e.offsetX
-      if (offsetRight > 10) return null
+    thColResize (params) {
+      let {event, column} = params
       this.isColResize = true
-      this.startOffsetX = e.clientX
-      this.startWidth = e.target.offsetWidth
-      this.currentColumn = this.columns[index]
+      this.startOffsetX = event.clientX
+      this.startWidth = event.target.offsetWidth
+      this.currentColumn = column
       this.oldTableWidth = this.$refs.table.offsetWidth
     },
     docMouseUp (e) {
@@ -95,12 +94,17 @@ export default {
     docMousemove (e) {
       if (this.isColResize) {
         let width = this.startWidth + e.clientX - this.startOffsetX
-        let minWidth = this.currentColumn.index ? 40 : parseInt(this.currentColumn.minWidth) || 80
+        // 默认index列最新40，其他80
+        let minWidth = parseInt(this.currentColumn.minWidth) || (this.currentColumn.index ? 40 : 80)
+
         if (width >= minWidth) {
           this.currentColumn.width = width + 'px'
           this.tableWidth = this.oldTableWidth + e.clientX - this.startOffsetX
         }
       }
+    },
+    rowHover () {
+
     }
   },
   created () {

@@ -1,17 +1,51 @@
+let columnId = 0
 export default {
   name: 'MTableColumn',
   componentName: 'MTableColumn',
   props: {
     prop: String,
     label: String,
-    algin: String,
+    align: String,
     width: [Number, String],
-    index: [Boolean, Function],
-    minWidth: [Number, String]
+    index: Boolean,
+    minWidth: [Number, String],
+    className: [String, Function],
+    labelClassName: [String, Function],
+    show: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
-    return {
-      column: null
+    return {}
+  },
+  watch: {
+    prop (val) {
+      this.column.prop = val
+    },
+    label (val) {
+      this.column.label = val
+    },
+    align (val) {
+      this.column.align = val
+    },
+    width (val) {
+      this.column.width = val
+    },
+    index (val) {
+      this.column.index = val
+    },
+    minWidth (val) {
+      this.column.minWidth = val
+    },
+    className (val) {
+      this.column.className = val
+    },
+    labelClassName (val) {
+      this.column.labelClassName = val
+    },
+    show (val) {
+      this.column.show = val
     }
   },
   methods: {
@@ -30,15 +64,16 @@ export default {
   beforeCreate () {
     this.column = {}
   },
-  // updated () {
-  //   console.log(this)
-  //   return null
-  // },
   created () {
-    let column = {...this.$props}
-    this.column = column
+    this.customRender = this.$options.render
+    this.$options.render = h => h('div', this.$slots.default)
+
+    let column = {
+      ...this.$props,
+      id: 'col-' + columnId++
+    }
     let that = this
-    column.render = function (h, data) {
+    column.renderCell = function (h, data) {
       let render = (h, data) => {
         return column.index ? data.index + 1 : data.row[column.prop]
       }
@@ -48,12 +83,20 @@ export default {
       }
       return <div class="cell">{ render(h, data) }</div>
     }
+
+    this.parent = this.getParent('MTable')
+    this.column = column
   },
   mounted () {
-    let parent = this.getParent('MTable')
-    parent.columns.push(this.column)
+    this.parent.columns.push(this.column)
   },
-  render () {
-    return null
+  destroyed () {
+    if (this.parent) {
+      let index = this.parent.columns.map(e => e.id).indexOf(this.column.id)
+
+      if (index > -1) {
+        this.parent.columns.splice(index, 1)
+      }
+    }
   }
 }

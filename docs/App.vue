@@ -3,26 +3,27 @@
     <!-- <fork-link :repo="repo" /> -->
     <header>
       <!-- <img src="./assets/logo.png"> -->
-      <h1 style="font-weight: 100">m-button 按钮组件</h1>
+      <h1 style="font-weight: 100">m-button 按钮组件{{label}}</h1>
       <!-- <div style="margin-bottom: 50px;">
         <a :href="repo" target="_blank"><m-button type="info" size="large" round>Github</m-button></a>
         &nbsp;
         <a href="#button-zhi-chi-5-chong-zhu-ti-lei-xing"><m-button type="success" size="large" plain round>Example</m-button></a>
       </div> -->
+      <input type="text" v-model="label">
     </header>
     <div style="width: 800px; margin: 100px auto">
-      <m-table :data="data" stripe border>
-        <m-table-column index label="编号" width="80px"></m-table-column>
-        <m-table-column prop="name" label="名字"></m-table-column>
-        <m-table-column prop="age" label="年龄"></m-table-column>
+      <m-table :data="data" stripe border row-class="table-test" height="300">
+        <m-table-column index label="编号" min-width="40px"></m-table-column>
+        <m-table-column prop="name" label="名字" align="center"></m-table-column>
+        <m-table-column prop="age" label="年龄" align="center"></m-table-column>
         <m-table-column prop="login" label="username"></m-table-column>
-        <m-table-column label="操作">
+        <m-table-column :prop="label" label="test" ></m-table-column>
+        <m-table-column label="操作" class-name="td-test" label-class-name="th-test">
           <template slot-scope="scope">
-            <a href="#">{{scope.row.login}}</a>
             <a href="#">{{scope.row.login}}</a>
           </template>
         </m-table-column>
-        <m-table-column :label="label">
+        <m-table-column label="test">
           <template slot-scope="scope">
             <m-button type="info" size="mini" >信息</m-button>
           </template>
@@ -62,16 +63,27 @@ export default {
         {name: '王五', age: 20, login: 'wangwu'},
         {name: '测试员', age: 21, login: 'ceshi'},
         {name: 'ADMIN', age: 22, login: 'TEST'},
-        {name: 'TEST', age: 17, login: 'ADMIN'}
+        {name: 'TEST', age: 17, login: 'ADMIN'},
+        {name: 'TEST', age: 17, login: 'ADMIN'},
+        {name: 'TEST', age: 17, login: 'ADMIN'},
+        {name: 'TEST', age: 17, login: 'ADMIN'},
+        {name: 'TEST', age: 17, login: 'ADMIN'},
+        {name: 'TEST', age: 17, login: 'ADMIN'},
+        {name: 'TEST', age: 17, login: 'ADMIN'},
+        {name: '李四', age: 18, login: 'lisi'},
+        {name: '王五', age: 20, login: 'wangwu'},
+        {name: '测试员', age: 21, login: 'ceshi'}
       ]
     }
   },
   computed: {
     repo () {
       return pkg.repository.url.replace(/git\+/, '')
-    },
-    html () {
-      return <div>aaa</div>
+    }
+  },
+  methods: {
+    rowHover (row) {
+      console.log(row)
     }
   },
   created () {
