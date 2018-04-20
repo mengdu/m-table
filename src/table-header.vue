@@ -12,7 +12,8 @@
         v-for="(column, index) in columns"
         :key="column.label + index"
         :style="{
-          width: column.width
+          width: column.width,
+          height: headHeight
         }"
         :class="cellClass(column, index)"
         @mousemove="thMouseMove"
@@ -27,7 +28,8 @@ export default {
   props: {
     columns: Array,
     width: [String, Number],
-    border: Boolean
+    border: Boolean,
+    headHeight: [String, Number]
   },
   methods: {
     cellClass (col, index) {

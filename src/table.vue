@@ -4,14 +4,28 @@
       height: toCssVal(height),
       maxHeight: toCssVal(maxHeight),
       width: toCssVal(width),
-      maxWidth: toCssVal(maxWidth)
+      maxWidth: toCssVal(maxWidth),
+      position: isFixedHead ? 'relative' : null
     }"
+    @scroll="onscroll"
     >
     <div class="m-table-slot"><slot></slot></div>
+    <div class="m-table-seat" v-if="isFixedHead"
+      :style="{
+        height: headSeatHeight + 'px'
+      }"
+      ></div>
     <m-table-header
+      ref="head"
       :columns="doColumns"
       :width="doWidth"
       :border="border"
+      :headHeight="toCssVal(headHeight)"
+      :style="{
+        position: isFixedHead ? 'absolute' : null,
+        top: isFixedHead ? headSeatTop : null,
+        background: 'inherit'
+      }"
       @col-resize="thColResize"
       ></m-table-header>
     <table class="m-table m-table-body" ref="table"
@@ -54,7 +68,8 @@ export default {
     height: [String, Number],
     maxHeight: [String, Number],
     width: [String, Number],
-    maxWidth: [String, Number]
+    maxWidth: [String, Number],
+    headHeight: [String, Number]
   },
   data () {
     return {
@@ -63,7 +78,15 @@ export default {
       startOffsetX: 0,
       startWidth: 0,
       currentColumn: null,
-      tableWidth: null
+      tableWidth: null,
+      isFixedHead: false,
+      headSeatHeight: '',
+      headSeatTop: 0
+    }
+  },
+  watch: {
+    headHeight () {
+      this.setFixedHead()
     }
   },
   computed: {
@@ -103,14 +126,25 @@ export default {
         }
       }
     },
-    rowHover () {
+    setFixedHead () {
+      // 设置了固定高度才固定表头
+      this.isFixedHead = !!this.$el.style.height
 
+      setTimeout(() => {
+        this.headSeatHeight = this.$refs.head.$el.offsetHeight
+      })
+    },
+    onscroll (e) {
+      if (!this.$el.style.height) return null
+      // console.log(e.target.scrollTop)
+      this.headSeatTop = e.target.scrollTop + 'px'
     }
   },
   created () {
     window.table = this
   },
   mounted () {
+    this.setFixedHead()
     document.addEventListener('mousemove', this.docMousemove)
     document.addEventListener('mouseup', this.docMouseUp)
     this.removeListen = () => {

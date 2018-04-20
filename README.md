@@ -1,41 +1,12 @@
 
 ## Button
 
-Button常用的操作按钮。
+数据表格组件
 
-例子：[Example](https://mengdu.github.io/m-button/example/)
+例子：[Example](https://mengdu.github.io/m-table/example/)
 
 打包工具： [vue-component-devtool](https://github.com/mengdu/vue-component-devtool)
 
-## use
-
-
-```ls
-npm install vue-m-button
-```
-
-```js
-import MButton from 'vue-m-button'
-import 'vue-m-button/dist/css/default.css'
-
-Vue.use(MButton)
-```
-
-会全局注册 `m-button-group`，`m-button` 组件。
-
-```html
-<m-button>defaut</m-button>
-```
-
-**按钮组：**
-
-```html
-<m-button-group>
-  <m-button type="info">首页</m-button>
-  <m-button type="info">热门</m-button>
-  <m-button type="info">专栏</m-button>
-</m-button-group>
-```
 
 ### MTable Attributes
 
@@ -50,22 +21,32 @@ Vue.use(MButton)
 | max-height | 最大高度   | String\Number  |  —  |  —  |
 | width | 宽   | String\Number |  —  |  —  |
 | max-width | 最大宽   | String\Number |  —  |  —  |
-
+| head-height | 表头高度   | String\Number |  —  |  —  |
 
 ### MTable Events
 
-row-click
-row-hover
+
+| 参数      | 说明    | 参数      |  可选值  |
+|---------- |-------- |---------- |--------- |
+| row-click |  行被点击  | {event, row, index} |    —   |
+| row-hover |  鼠标经过行  | {event, row, index} |    —   |
 
 
-### MTable Column Attributes
 
-prop
-label
-align
-width
-index
-minWidth
-className
-labelClassName
-show
+
+### MTable-column Attributes
+
+
+| 参数      | 说明    | 类型      | 可选值       | 默认值   |
+|---------- |-------- |---------- |-------------  |-------- |
+| prop     | 列显示的字段   | string |  —  |    —     |
+| label    | 表头显示名字 | string    |   —    |  —   |
+| align    | 列对齐   | string    |  center,left,right  | left   |
+| index    | 序号列   | Boolean  |  true/false  |  false  |
+| minWidth | 列可缩小最小宽度   | string|number  |  —  |  80px  |
+| className | 列td类名   | String, Function  |  —  |  —  |
+| labelClassName | 列th类名   | String, Function  |  —  |  —  |
+| width | 列宽   | String\Number |  —  |  —  |
+| show | 是否显示列   | Boolean |  true/false  |  true  |
+
+
