@@ -4,26 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import DemoBlock from './components/demo-block'
 import MTable from '@/index'
+import MButton from 'vue-m-button'
+import 'vue-m-button/dist/css/default.css'
 
 Vue.use(MTable)
-
-
-Vue.component('m-test', {
-  methods: {
-    test (h) {
-      return this.$scopedSlots.default ?
-      h('div', this.$scopedSlots.default({text: 'this is a test'}))
-      : h('div', this.$slots.default)
-    }
-  },
-  created () {
-    console.log(this.test(this.$createElement))
-  },
-  render (h, data) {
-    console.log(this.$slots, data)
-    this.test(h)
-  }
-})
+Vue.use(MButton)
 
 Vue.component('DemoBlock', DemoBlock)
 Vue.config.productionTip = false

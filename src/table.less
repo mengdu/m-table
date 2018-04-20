@@ -1,12 +1,18 @@
 @table-name: m-table;
 
+.@{table-name}-block {
+  overflow: auto;
+  background-color: #fff;
+}
+
 .@{table-name}{
   width: 100%;
   border-spacing: 0px;
   border-collapse:collapse;
   table-layout: fixed;
-  background-color: #fff;
-  
+  &-slot{
+    display: none;
+  }
   &&-head{
     user-select: none;
   }
@@ -15,18 +21,31 @@
     margin-top: -1px;
   }
   &&__stripe &-row:nth-child(even){
-    background-color: #F6F8FA;
+    background-color: #e6ebf1;
   }
   & &-row:hover{
-    background-color: #F6F8FA;
+    background-color: #e6ebf1;
   }
   & &-column{
-    padding: 5px 12px;
     line-height: 20px;
     box-sizing: border-box;
     overflow: hidden;
+    padding: 5px 12px;
+    // & .cell {
+    //   margin: -5px -12px;
+    // }
+    &.is-center{
+      text-align: center;
+    }
+    &.is-left{
+      text-align: left;
+    }
+    &.is-right{
+      text-align: right;
+    }
   }
   &&__border &-column{
-    border: solid 1px #EAECEF;
+    border: solid 1px #d4d4d4;
   }
 }
+
