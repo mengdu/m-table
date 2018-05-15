@@ -12,18 +12,18 @@
       <!-- <input type="text" v-model="label"> -->
     </header>
     <div style="width: 800px; margin: 100px auto">
-      <m-table :data="data" stripe border row-class="table-test" height="300" head-height="35">
+      <m-table :data="data" stripe border :row-class="rowCalss" max-height="400" head-height="35" title="数据表格">
         <m-table-column index label="编号" min-width="40px"></m-table-column>
-        <m-table-column prop="name" label="名字" align="center"></m-table-column>
+        <m-table-column prop="name" label="名字" align="center" width="250"></m-table-column>
         <m-table-column prop="age" label="年龄" align="center"></m-table-column>
         <m-table-column prop="login" label="username"></m-table-column>
-        <!-- <m-table-column :prop="label" label="test" ></m-table-column> -->
+        <m-table-column :prop="label" label="test" ></m-table-column>
         <m-table-column label="操作" class-name="td-test" label-class-name="th-test">
           <template slot-scope="scope">
             <a href="#">{{scope.row.login}}</a>
           </template>
         </m-table-column>
-        <m-table-column label="test">
+        <m-table-column label="控制" align="center">
           <template slot-scope="scope">
             <m-button type="info" size="mini" >信息</m-button>
           </template>
@@ -62,17 +62,17 @@ export default {
         {name: '李四', age: 18, login: 'lisi'},
         {name: '王五', age: 20, login: 'wangwu'},
         {name: '测试员', age: 21, login: 'ceshi'},
-        {name: 'ADMIN', age: 22, login: 'TEST'},
-        {name: 'TEST', age: 17, login: 'ADMIN'},
-        {name: 'TEST', age: 17, login: 'ADMIN'},
-        {name: 'TEST', age: 17, login: 'ADMIN'},
-        {name: 'TEST', age: 17, login: 'ADMIN'},
-        {name: 'TEST', age: 17, login: 'ADMIN'},
-        {name: 'TEST', age: 17, login: 'ADMIN'},
-        {name: 'TEST', age: 17, login: 'ADMIN'},
-        {name: '李四', age: 18, login: 'lisi'},
-        {name: '王五', age: 20, login: 'wangwu'},
-        {name: '测试员', age: 21, login: 'ceshi'}
+        // {name: 'ADMIN', age: 22, login: 'TEST'},
+        // {name: 'asdfa', age: 17, login: 'ADMIN'},
+        // {name: 'asdfa', age: 17, login: 'GUEST'},
+        // {name: 'TEasdfaST', age: 17, login: 'ADMIN'},
+        // {name: 'asdfaasd', age: 17, login: 'ADMIN'},
+        // {name: 'TEST', age: 17, login: 'ADMIN'},
+        // {name: 'asdfaasd', age: 17, login: 'AGENT'},
+        // {name: 'asdfsd', age: 17, login: 'ADMIN'},
+        // {name: '李四', age: 18, login: 'lisi'},
+        // {name: '王五', age: 20, login: 'wangwu'},
+        // {name: '测试员', age: 21, login: 'ceshi'}
       ]
     }
   },
@@ -84,10 +84,15 @@ export default {
   methods: {
     rowHover (row) {
       console.log(row)
+    },
+    rowCalss (row) {
+      // console.log(row)
+      return ['test']
     }
   },
   created () {
     window.label = this.label
+    window.data = this.data
   }
 }
 </script>

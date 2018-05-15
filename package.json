@@ -6,8 +6,8 @@
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mengdu/m-table"
+    "type": "https",
+    "url": "https://github.com/mengdu/m-table.git"
   },
   "bugs": {
     "url": "https://github.com/mengdu/m-table/issues"
