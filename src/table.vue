@@ -1,34 +1,30 @@
 <template>
-  <div class="m-table-block"
-    :style="{
-      height: toCssVal(height),
-      maxHeight: toCssVal(maxHeight),
-      width: toCssVal(width),
-      maxWidth: toCssVal(maxWidth),
-      position: isFixedHead ? 'relative' : null
-    }"
-    @scroll="onscroll"
-    >
+  <div class="m-table-block">
+    <div class="m-table-title" vif="$slot.title || title"><slot name="title">{{title}}</slot></div>
     <div class="m-table-slot"><slot></slot></div>
-    <div class="m-table-seat" v-if="isFixedHead"
-      :style="{
-        height: headSeatHeight + 'px'
-      }"
-      ></div>
+    <div class="m-table-header" ref="tableHeader">
     <m-table-header
       ref="head"
       :columns="doColumns"
       :width="doWidth"
       :border="border"
       :headHeight="toCssVal(headHeight)"
-      :style="{
-        position: isFixedHead ? 'absolute' : null,
-        top: isFixedHead ? headSeatTop : null,
-        background: 'inherit'
-      }"
+      :has-gutter="hasGutter"
+      :gutter-width="scrollWidth"
       @col-resize="thColResize"
       ></m-table-header>
-    <table class="m-table m-table-body" ref="table"
+    </div>
+    <div class="m-table-body"
+      :style="{
+        height: toCssVal(height),
+        maxHeight: toCssVal(maxHeight),
+        width: toCssVal(width),
+        maxWidth: toCssVal(maxWidth)
+      }"
+      @scroll="onscroll"
+      ref="tableBody"
+      >
+    <table class="m-table" ref="table"
       :class="{
         'm-table__stripe': stripe,
         'm-table__border': border
@@ -41,13 +37,13 @@
         <col
           v-for="(column, index) in doColumns"
           :key="column.label + index"
-          :style="{
-            width: column.width
-          }"
+          :width="column.width"
           >
       </colgroup>
       <m-table-body :row-class="rowClass" :columns="doColumns" :data="data" v-on="$listeners"></m-table-body>
     </table>
+    <div class="m-table-void" v-if="data.length === 0">{{voidText}}</div>
+    </div>
   </div>
 </template>
 <script>
@@ -61,6 +57,7 @@ export default {
     MTableBody
   },
   props: {
+    title: String,
     data: Array,
     stripe: Boolean,
     border: Boolean,
@@ -69,7 +66,15 @@ export default {
     maxHeight: [String, Number],
     width: [String, Number],
     maxWidth: [String, Number],
-    headHeight: [String, Number]
+    headHeight: [String, Number],
+    scrollWidth: {
+      type: Number,
+      default: 17
+    },
+    voidText: {
+      type: String,
+      default: '暂无数据'
+    }
   },
   data () {
     return {
@@ -79,14 +84,14 @@ export default {
       startWidth: 0,
       currentColumn: null,
       tableWidth: null,
-      isFixedHead: false,
-      headSeatHeight: '',
-      headSeatTop: 0
+      scrollTop: 0,
+      scrollLeft: 0,
+      hasGutter: false
     }
   },
   watch: {
-    headHeight () {
-      this.setFixedHead()
+    scrollLeft (val) {
+      this.$refs.tableHeader.scrollLeft = val
     }
   },
   computed: {
@@ -121,42 +126,40 @@ export default {
         let minWidth = parseInt(this.currentColumn.minWidth) || (this.currentColumn.index ? 40 : 80)
 
         if (width >= minWidth) {
-          this.currentColumn.width = width + 'px'
+          this.currentColumn.width = width
           this.tableWidth = this.oldTableWidth + e.clientX - this.startOffsetX
         }
       }
     },
-    setFixedHead () {
-      // 设置了固定高度才固定表头
-      this.isFixedHead = !!this.$el.style.height
-
-      setTimeout(() => {
-        this.headSeatHeight = this.$refs.head.$el.offsetHeight
-      })
-    },
     onscroll (e) {
-      if (!this.$el.style.height) return null
-      // console.log(e.target.scrollTop)
-      this.headSeatTop = e.target.scrollTop + 'px'
+      this.scrollLeft = e.target.scrollLeft
+      this.scrollTop = e.target.scrollTop
+    },
+    setGutter () {
+      let tableBody = this.$refs.tableBody
+      setTimeout(() => {
+        if (tableBody.offsetHeight < tableBody.scrollHeight) {
+          this.hasGutter = true
+        } else {
+          this.hasGutter = false
+        }
+      })
     }
   },
-  created () {
-    window.table = this
+  updated () {
+    this.setGutter()
   },
   mounted () {
-    this.setFixedHead()
     document.addEventListener('mousemove', this.docMousemove)
     document.addEventListener('mouseup', this.docMouseUp)
     this.removeListen = () => {
       document.removeEventListener('mousemove', this.docMousemove)
       document.removeEventListener('mouseup', this.docMouseUp)
     }
+    this.setGutter()
   },
   beforeDestroy () {
     this.removeListen()
   }
 }
 </script>
-<style lang="less">
-  @import './table.less';
-</style>

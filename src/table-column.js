@@ -64,9 +64,12 @@ export default {
   beforeCreate () {
     this.column = {}
   },
+  render () {
+    return null
+  },
   created () {
-    this.customRender = this.$options.render
-    this.$options.render = h => h('div', this.$slots.default)
+    // this.customRender = this.$options.render
+    // this.$options.render = h => h('div', this.$slots.default)
 
     let column = {
       ...this.$props,

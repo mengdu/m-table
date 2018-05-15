@@ -1,39 +1,54 @@
 @table-name: m-table;
 
 .@{table-name}-block {
-  overflow: auto;
   background-color: #fff;
 }
 
 .@{table-name}{
   width: 100%;
   border-spacing: 0px;
-  border-collapse:collapse;
+  border-collapse: collapse;
   table-layout: fixed;
+  &-title{
+    line-height: 30px;
+    padding: 5px 10px;
+  }
   &-slot{
     display: none;
+  }
+  &-header {
+    overflow: hidden;
   }
   &&-head{
     user-select: none;
   }
 
-  &&-body{
+  &-body{
     margin-top: -1px;
+    overflow: auto;
   }
+  
+  &-void{
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    color: #7c849a;
+  }
+  &&__border + &-void{
+    border: solid 1px #d4d4d4;
+  }
+
   &&__stripe &-row:nth-child(even){
-    background-color: #e6ebf1;
+    background-color: #f0f4f9;
   }
   & &-row:hover{
-    background-color: #e6ebf1;
+    background-color: #e6ebf1 !important;
   }
   & &-column{
     line-height: 20px;
     box-sizing: border-box;
     overflow: hidden;
     padding: 5px 12px;
-    // & .cell {
-    //   margin: -5px -12px;
-    // }
     &.is-center{
       text-align: center;
     }

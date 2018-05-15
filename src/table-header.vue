@@ -7,8 +7,16 @@
       width: width
     }"
     >
-    <thead>
-      <th class="m-table-column"
+    <colgroup>
+      <col
+        v-for="(column, index) in columns"
+        :key="column.label + index"
+        :width="column.width"
+        >
+        <col name="gutter" :width="gutterWidth" v-if="hasGutter">
+    </colgroup>
+    <thead ref="thead">
+      <th class="m-table-column" colspan="1" rowspan="1"
         v-for="(column, index) in columns"
         :key="column.label + index"
         :style="{
@@ -19,6 +27,7 @@
         @mousemove="thMouseMove"
         @mousedown="thMouseDown($event, index)"
         >{{column.label}}</th>
+        <th class="gutter" v-if="hasGutter"></th>
     </thead>
   </table>
 </template>
@@ -29,7 +38,9 @@ export default {
     columns: Array,
     width: [String, Number],
     border: Boolean,
-    headHeight: [String, Number]
+    headHeight: [String, Number],
+    hasGutter: Boolean,
+    gutterWidth: [String, Number]
   },
   methods: {
     cellClass (col, index) {
@@ -64,7 +75,25 @@ export default {
         event: e,
         column: this.columns[index]
       })
+    },
+    setCol () {
+      let childs = this.$el.querySelectorAll('thead > th')
+      if (!childs.length) return
+      for (let i = 0, len = childs.length; i < len; i++) {
+        let th = childs[i]
+        if (th.className.indexOf('gutter') === -1) {
+          this.columns[i].width = th.offsetWidth
+        }
+      }
     }
+  },
+  updated () {
+    if (this.__updated__) return
+    this.setCol()
+    this.__updated__ = true
+  },
+  mounted () {
+    this.setCol()
   }
 }
 </script>

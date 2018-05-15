@@ -30,10 +30,10 @@ export default {
       return ['m-table-column', name, cell]
     },
     trClass (row, index) {
-      let tr = typeof this.rowClass === 'function'
+      let rowClass = typeof this.rowClass === 'function'
         ? this.rowClass({row: {...row}, index})
         : this.rowClass
-      return ['m-table-row', tr]
+      return ['m-table-row', rowClass]
     }
   },
   render (h) {
