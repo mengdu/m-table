@@ -4,7 +4,7 @@
   "description": "A table component for vue.",
   "author": "lanyueos@qq.com",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "index.js",
   "repository": {
     "type": "https",
     "url": "https://github.com/mengdu/m-table.git"
@@ -23,7 +23,6 @@
     "docs": "node build/docs.js",
     "build": "node build/build.js"
   },
-  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",

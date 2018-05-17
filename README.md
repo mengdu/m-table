@@ -14,7 +14,6 @@ npm install -S vue-m-table
 
 ```js
 import MTable from 'vue-m-table'
-import 'vue-m-table/dist/css/default.css'
 
 Vue.use(MTable) // 注册 m-table, m-table-column 组件
 ```
