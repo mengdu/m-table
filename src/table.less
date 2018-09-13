@@ -12,6 +12,12 @@
   &-title{
     line-height: 30px;
     padding: 5px 10px;
+    &::after,
+    &::before {
+      content: "";
+      display: table;
+      clear: both;
+    }
   }
   &-slot{
     display: none;
@@ -21,6 +27,10 @@
   }
   &&-head{
     user-select: none;
+    th {
+      height: 36px;
+      background: #eaeaea;
+    }
   }
 
   &-body{
@@ -35,20 +45,21 @@
     color: #7c849a;
   }
   &&__border + &-void{
-    border: solid 1px #d4d4d4;
+    border: solid 1px #DDDDDD;
   }
 
   &&__stripe &-row:nth-child(even){
-    background-color: #f0f4f9;
+    background-color: #f5f5f5;
   }
   & &-row:hover{
-    background-color: #e6ebf1 !important;
+    background-color: #f6f6f6 !important;
   }
   & &-column{
-    line-height: 20px;
     box-sizing: border-box;
     overflow: hidden;
     padding: 5px 12px;
+    vertical-align: middle;
+
     &.is-center{
       text-align: center;
     }
@@ -58,9 +69,14 @@
     &.is-right{
       text-align: right;
     }
+    .cell {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
   &&__border &-column{
-    border: solid 1px #d4d4d4;
+    border: solid 1px #DDDDDD;
   }
 }
 

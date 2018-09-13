@@ -1,0 +1,74 @@
+.m-table-block {
+  background-color: #fff;
+}
+.m-table {
+  width: 100%;
+  border-spacing: 0px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.m-table-title {
+  line-height: 30px;
+  padding: 5px 10px;
+}
+.m-table-title::after,
+.m-table-title::before {
+  content: "";
+  display: table;
+  clear: both;
+}
+.m-table-slot {
+  display: none;
+}
+.m-table-header {
+  overflow: hidden;
+}
+.m-table.m-table-head {
+  user-select: none;
+}
+.m-table.m-table-head th {
+  height: 36px;
+  background: #eaeaea;
+}
+.m-table-body {
+  margin-top: -1px;
+  overflow: auto;
+}
+.m-table-void {
+  height: 100px;
+  text-align: center;
+  line-height: 100px;
+  color: #7c849a;
+}
+.m-table.m-table__border + .m-table-void {
+  border: solid 1px #DDDDDD;
+}
+.m-table.m-table__stripe .m-table-row:nth-child(even) {
+  background-color: #f5f5f5;
+}
+.m-table .m-table-row:hover {
+  background-color: #f6f6f6 !important;
+}
+.m-table .m-table-column {
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 5px 12px;
+  vertical-align: middle;
+}
+.m-table .m-table-column.is-center {
+  text-align: center;
+}
+.m-table .m-table-column.is-left {
+  text-align: left;
+}
+.m-table .m-table-column.is-right {
+  text-align: right;
+}
+.m-table .m-table-column .cell {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.m-table.m-table__border .m-table-column {
+  border: solid 1px #DDDDDD;
+}

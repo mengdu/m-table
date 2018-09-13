@@ -1,6 +1,6 @@
 <template>
   <div class="m-table-block">
-    <div class="m-table-title" vif="$slot.title || title"><slot name="title">{{title}}</slot></div>
+    <div class="m-table-title" v-if="$slots.title || title"><slot name="title">{{title}}</slot></div>
     <div class="m-table-slot"><slot></slot></div>
     <div class="m-table-header" ref="tableHeader">
     <m-table-header

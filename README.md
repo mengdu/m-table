@@ -1,9 +1,12 @@
 
 ## Table
 
-数据表格组件
+Vue 的数据表格组件
 
-例子：[Example](https://mengdu.github.io/m-table/example/)
+
+功能用法与 [ElTable](http://element.eleme.io/#/zh-CN/component/table) 相似。
+
+[Live Demo](https://mengdu.github.io/m-table/example/)
 
 
 **install**
@@ -120,4 +123,4 @@ export default {
 
 ### Other
 
-打包工具： [vue-component-devtool](https://github.com/mengdu/vue-component-devtool)
+实现参考了 [ElTable](https://github.com/ElemeFE/element/blob/dev/packages/table/src/table.vue) 
